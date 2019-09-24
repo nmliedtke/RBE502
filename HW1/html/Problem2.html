@@ -1,0 +1,379 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Problem2</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-09-10"><meta name="DC.source" content="Problem2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Problem 2</a></li></ul></div><pre class="codeinput">clc;
+clear <span class="string">all</span>;
+</pre><h2 id="2">Problem 2</h2><pre class="codeinput">syms <span class="string">q1</span> <span class="string">q2</span> <span class="string">q3</span> <span class="string">a</span> <span class="string">b</span> <span class="string">c</span>;
+syms <span class="string">dq1</span> <span class="string">dq2</span> <span class="string">dq3</span>;
+syms <span class="string">m1</span> <span class="string">mt</span> <span class="string">g</span>;
+
+T01 = [cos(q1)  0       sin(q1) 0; <span class="keyword">...</span>
+       sin(q1)  0       cos(q1) 0; <span class="keyword">...</span>
+       0        -1      0       a; <span class="keyword">...</span>
+       0        0       0       1]
+
+
+T12 = [1        0       0       0; <span class="keyword">...</span>
+       0        0       1       0; <span class="keyword">...</span>
+       0        -1      0       b+q2; <span class="keyword">...</span>
+       0        0       0       1];
+
+T23 = [0        1       0       0; <span class="keyword">...</span>
+       -1       0       0       0; <span class="keyword">...</span>
+       0        0       1       c+q3; <span class="keyword">...</span>
+       0        0       0       1];
+
+T02 = T01*T12
+T03 = T02*T23
+
+P03 = T03(1:3,4)
+
+jacob = [diff(P03(1:3),q1), diff(P03(1:3),q2), diff(P03(1:3),q3)]
+
+
+K1 = 0;
+P1 = m1*g*a
+
+Vmt = jacob * [dq1; dq2; dq3]
+K2 = 0.5*mt*(Vmt.' * Vmt)
+P2 = mt*g*P03(3)
+
+K = K1+K2
+P = P1+P2
+
+L = K-P
+
+syms <span class="string">Q1</span> <span class="string">Q2</span> <span class="string">Q3</span> <span class="string">Q1(t)</span> <span class="string">Q2(t)</span> <span class="string">Q3(t)</span> <span class="string">ddq1</span> <span class="string">ddq2</span> <span class="string">ddq3</span>
+
+diffq1dot = diff(L,dq1)
+diffq1dot = subs(diffq1dot, [q1 q2 q3 dq1 dq2 dq3], [Q1 Q2 Q3 diff(Q1(t),t) diff(Q2(t),t) diff(Q3(t),t)])
+diffq1dot = diff(diffq1dot, t)
+diffq1dot = subs(diffq1dot, [Q1 Q2 Q3 diff(Q1(t),t) diff(Q2(t),t) diff(Q3(t),t) diff(Q1(t),t,t) diff(Q2(t),t,t) diff(Q3(t),t,t)], [q1 q2 q3 dq1 dq2 dq3 ddq1 ddq2 ddq3])
+
+diffq1 = diff(L,q1)
+
+Tau1 = diffq1dot - diffq1
+
+diffq2dot = diff(L,dq2)
+diffq2dot = subs(diffq2dot, [q1 q2 q3 dq1 dq2 dq3], [Q1 Q2 Q3 diff(Q1(t),t) diff(Q2(t),t) diff(Q3(t),t)])
+diffq2dot = diff(diffq2dot, t)
+diffq2dot = subs(diffq2dot, [Q1 Q2 Q3 diff(Q1(t),t) diff(Q2(t),t) diff(Q3(t),t) diff(Q1(t),t,t) diff(Q2(t),t,t) diff(Q3(t),t,t)], [q1 q2 q3 dq1 dq2 dq3 ddq1 ddq2 ddq3])
+
+diffq2 = diff(L,q2)
+
+F2 = diffq2dot - diffq2
+
+diffq3dot = diff(L,dq3)
+diffq3dot = subs(diffq3dot, [q1 q2 q3 dq1 dq2 dq3], [Q1 Q2 Q3 diff(Q1(t),t) diff(Q2(t),t) diff(Q3(t),t)])
+diffq3dot = diff(diffq3dot, t)
+diffq3dot = subs(diffq3dot, [Q1 Q2 Q3 diff(Q1(t),t) diff(Q2(t),t) diff(Q3(t),t) diff(Q1(t),t,t) diff(Q2(t),t,t) diff(Q3(t),t,t)], [q1 q2 q3 dq1 dq2 dq3 ddq1 ddq2 ddq3])
+
+diffq3 = diff(L,q3)
+
+F3= diffq3dot - diffq3
+</pre><pre class="codeoutput"> 
+T01 =
+ 
+[ cos(q1),  0, sin(q1), 0]
+[ sin(q1),  0, cos(q1), 0]
+[       0, -1,       0, a]
+[       0,  0,       0, 1]
+ 
+ 
+T02 =
+ 
+[ cos(q1), -sin(q1),  0, sin(q1)*(b + q2)]
+[ sin(q1), -cos(q1),  0, cos(q1)*(b + q2)]
+[       0,        0, -1,                a]
+[       0,        0,  0,                1]
+ 
+ 
+T03 =
+ 
+[ sin(q1), cos(q1),  0, sin(q1)*(b + q2)]
+[ cos(q1), sin(q1),  0, cos(q1)*(b + q2)]
+[       0,       0, -1,       a - c - q3]
+[       0,       0,  0,                1]
+ 
+ 
+P03 =
+ 
+ sin(q1)*(b + q2)
+ cos(q1)*(b + q2)
+       a - c - q3
+ 
+ 
+jacob =
+ 
+[  cos(q1)*(b + q2), sin(q1),  0]
+[ -sin(q1)*(b + q2), cos(q1),  0]
+[                 0,       0, -1]
+ 
+ 
+P1 =
+ 
+a*g*m1
+ 
+ 
+Vmt =
+ 
+ dq2*sin(q1) + dq1*cos(q1)*(b + q2)
+ dq2*cos(q1) - dq1*sin(q1)*(b + q2)
+                               -dq3
+ 
+ 
+K2 =
+ 
+(mt*((dq2*sin(q1) + dq1*cos(q1)*(b + q2))^2 + (dq2*cos(q1) - dq1*sin(q1)*(b + q2))^2 + dq3^2))/2
+ 
+ 
+P2 =
+ 
+-g*mt*(c - a + q3)
+ 
+ 
+K =
+ 
+(mt*((dq2*sin(q1) + dq1*cos(q1)*(b + q2))^2 + (dq2*cos(q1) - dq1*sin(q1)*(b + q2))^2 + dq3^2))/2
+ 
+ 
+P =
+ 
+a*g*m1 - g*mt*(c - a + q3)
+ 
+ 
+L =
+ 
+(mt*((dq2*sin(q1) + dq1*cos(q1)*(b + q2))^2 + (dq2*cos(q1) - dq1*sin(q1)*(b + q2))^2 + dq3^2))/2 + g*mt*(c - a + q3) - a*g*m1
+ 
+ 
+diffq1dot =
+ 
+(mt*(2*cos(q1)*(b + q2)*(dq2*sin(q1) + dq1*cos(q1)*(b + q2)) - 2*sin(q1)*(b + q2)*(dq2*cos(q1) - dq1*sin(q1)*(b + q2))))/2
+ 
+ 
+diffq1dot =
+ 
+(mt*(2*cos(Q1(t))*(sin(Q1(t))*diff(Q2(t), t) + cos(Q1(t))*(b + Q2(t))*diff(Q1(t), t))*(b + Q2(t)) - 2*sin(Q1(t))*(cos(Q1(t))*diff(Q2(t), t) - sin(Q1(t))*(b + Q2(t))*diff(Q1(t), t))*(b + Q2(t))))/2
+ 
+ 
+diffq1dot =
+ 
+(mt*(2*cos(Q1(t))*(b + Q2(t))*(sin(Q1(t))*diff(Q2(t), t, t) - sin(Q1(t))*(b + Q2(t))*diff(Q1(t), t)^2 + cos(Q1(t))*(b + Q2(t))*diff(Q1(t), t, t) + 2*cos(Q1(t))*diff(Q1(t), t)*diff(Q2(t), t)) + 2*sin(Q1(t))*(b + Q2(t))*(cos(Q1(t))*(b + Q2(t))*diff(Q1(t), t)^2 - cos(Q1(t))*diff(Q2(t), t, t) + sin(Q1(t))*(b + Q2(t))*diff(Q1(t), t, t) + 2*sin(Q1(t))*diff(Q1(t), t)*diff(Q2(t), t)) + 2*cos(Q1(t))*(sin(Q1(t))*diff(Q2(t), t) + cos(Q1(t))*(b + Q2(t))*diff(Q1(t), t))*diff(Q2(t), t) - 2*sin(Q1(t))*(cos(Q1(t))*diff(Q2(t), t) - sin(Q1(t))*(b + Q2(t))*diff(Q1(t), t))*diff(Q2(t), t) - 2*cos(Q1(t))*(cos(Q1(t))*diff(Q2(t), t) - sin(Q1(t))*(b + Q2(t))*diff(Q1(t), t))*(b + Q2(t))*diff(Q1(t), t) - 2*sin(Q1(t))*(sin(Q1(t))*diff(Q2(t), t) + cos(Q1(t))*(b + Q2(t))*diff(Q1(t), t))*(b + Q2(t))*diff(Q1(t), t)))/2
+ 
+ 
+diffq1dot =
+ 
+(mt*(2*dq2*cos(q1)*(dq2*sin(q1) + dq1*cos(q1)*(b + q2)) + 2*cos(q1)*(b + q2)*(- sin(q1)*(b + q2)*dq1^2 + 2*dq2*cos(q1)*dq1 + ddq2*sin(q1) + ddq1*cos(q1)*(b + q2)) - 2*dq2*sin(q1)*(dq2*cos(q1) - dq1*sin(q1)*(b + q2)) + 2*sin(q1)*(b + q2)*(cos(q1)*(b + q2)*dq1^2 + 2*dq2*sin(q1)*dq1 - ddq2*cos(q1) + ddq1*sin(q1)*(b + q2)) - 2*dq1*cos(q1)*(b + q2)*(dq2*cos(q1) - dq1*sin(q1)*(b + q2)) - 2*dq1*sin(q1)*(b + q2)*(dq2*sin(q1) + dq1*cos(q1)*(b + q2))))/2
+ 
+ 
+diffq1 =
+ 
+0
+ 
+ 
+Tau1 =
+ 
+(mt*(2*dq2*cos(q1)*(dq2*sin(q1) + dq1*cos(q1)*(b + q2)) + 2*cos(q1)*(b + q2)*(- sin(q1)*(b + q2)*dq1^2 + 2*dq2*cos(q1)*dq1 + ddq2*sin(q1) + ddq1*cos(q1)*(b + q2)) - 2*dq2*sin(q1)*(dq2*cos(q1) - dq1*sin(q1)*(b + q2)) + 2*sin(q1)*(b + q2)*(cos(q1)*(b + q2)*dq1^2 + 2*dq2*sin(q1)*dq1 - ddq2*cos(q1) + ddq1*sin(q1)*(b + q2)) - 2*dq1*cos(q1)*(b + q2)*(dq2*cos(q1) - dq1*sin(q1)*(b + q2)) - 2*dq1*sin(q1)*(b + q2)*(dq2*sin(q1) + dq1*cos(q1)*(b + q2))))/2
+ 
+ 
+diffq2dot =
+ 
+(mt*(2*cos(q1)*(dq2*cos(q1) - dq1*sin(q1)*(b + q2)) + 2*sin(q1)*(dq2*sin(q1) + dq1*cos(q1)*(b + q2))))/2
+ 
+ 
+diffq2dot =
+ 
+(mt*(2*cos(Q1(t))*(cos(Q1(t))*diff(Q2(t), t) - sin(Q1(t))*(b + Q2(t))*diff(Q1(t), t)) + 2*sin(Q1(t))*(sin(Q1(t))*diff(Q2(t), t) + cos(Q1(t))*(b + Q2(t))*diff(Q1(t), t))))/2
+ 
+ 
+diffq2dot =
+ 
+-(mt*(2*cos(Q1(t))*(cos(Q1(t))*(b + Q2(t))*diff(Q1(t), t)^2 - cos(Q1(t))*diff(Q2(t), t, t) + sin(Q1(t))*(b + Q2(t))*diff(Q1(t), t, t) + 2*sin(Q1(t))*diff(Q1(t), t)*diff(Q2(t), t)) - 2*sin(Q1(t))*(sin(Q1(t))*diff(Q2(t), t, t) - sin(Q1(t))*(b + Q2(t))*diff(Q1(t), t)^2 + cos(Q1(t))*(b + Q2(t))*diff(Q1(t), t, t) + 2*cos(Q1(t))*diff(Q1(t), t)*diff(Q2(t), t)) - 2*cos(Q1(t))*(sin(Q1(t))*diff(Q2(t), t) + cos(Q1(t))*(b + Q2(t))*diff(Q1(t), t))*diff(Q1(t), t) + 2*sin(Q1(t))*(cos(Q1(t))*diff(Q2(t), t) - sin(Q1(t))*(b + Q2(t))*diff(Q1(t), t))*diff(Q1(t), t)))/2
+ 
+ 
+diffq2dot =
+ 
+-(mt*(2*cos(q1)*(cos(q1)*(b + q2)*dq1^2 + 2*dq2*sin(q1)*dq1 - ddq2*cos(q1) + ddq1*sin(q1)*(b + q2)) - 2*sin(q1)*(- sin(q1)*(b + q2)*dq1^2 + 2*dq2*cos(q1)*dq1 + ddq2*sin(q1) + ddq1*cos(q1)*(b + q2)) - 2*dq1*cos(q1)*(dq2*sin(q1) + dq1*cos(q1)*(b + q2)) + 2*dq1*sin(q1)*(dq2*cos(q1) - dq1*sin(q1)*(b + q2))))/2
+ 
+ 
+diffq2 =
+ 
+(mt*(2*dq1*cos(q1)*(dq2*sin(q1) + dq1*cos(q1)*(b + q2)) - 2*dq1*sin(q1)*(dq2*cos(q1) - dq1*sin(q1)*(b + q2))))/2
+ 
+ 
+F2 =
+ 
+- (mt*(2*dq1*cos(q1)*(dq2*sin(q1) + dq1*cos(q1)*(b + q2)) - 2*dq1*sin(q1)*(dq2*cos(q1) - dq1*sin(q1)*(b + q2))))/2 - (mt*(2*cos(q1)*(cos(q1)*(b + q2)*dq1^2 + 2*dq2*sin(q1)*dq1 - ddq2*cos(q1) + ddq1*sin(q1)*(b + q2)) - 2*sin(q1)*(- sin(q1)*(b + q2)*dq1^2 + 2*dq2*cos(q1)*dq1 + ddq2*sin(q1) + ddq1*cos(q1)*(b + q2)) - 2*dq1*cos(q1)*(dq2*sin(q1) + dq1*cos(q1)*(b + q2)) + 2*dq1*sin(q1)*(dq2*cos(q1) - dq1*sin(q1)*(b + q2))))/2
+ 
+ 
+diffq3dot =
+ 
+dq3*mt
+ 
+ 
+diffq3dot =
+ 
+mt*diff(Q3(t), t)
+ 
+ 
+diffq3dot =
+ 
+mt*diff(Q3(t), t, t)
+ 
+ 
+diffq3dot =
+ 
+ddq3*mt
+ 
+ 
+diffq3 =
+ 
+g*mt
+ 
+ 
+F3 =
+ 
+ddq3*mt - g*mt
+ 
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+clc;
+clear all;
+%% Problem 2
+syms q1 q2 q3 a b c;
+syms dq1 dq2 dq3;
+syms m1 mt g;
+
+T01 = [cos(q1)  0       sin(q1) 0; ...
+       sin(q1)  0       cos(q1) 0; ...
+       0        -1      0       a; ...
+       0        0       0       1]
+   
+
+T12 = [1        0       0       0; ...
+       0        0       1       0; ...
+       0        -1      0       b+q2; ...
+       0        0       0       1];
+   
+T23 = [0        1       0       0; ...
+       -1       0       0       0; ...
+       0        0       1       c+q3; ...
+       0        0       0       1];
+   
+T02 = T01*T12
+T03 = T02*T23
+
+P03 = T03(1:3,4)
+
+jacob = [diff(P03(1:3),q1), diff(P03(1:3),q2), diff(P03(1:3),q3)]
+
+
+K1 = 0;
+P1 = m1*g*a
+
+Vmt = jacob * [dq1; dq2; dq3]
+K2 = 0.5*mt*(Vmt.' * Vmt)
+P2 = mt*g*P03(3)
+
+K = K1+K2
+P = P1+P2
+
+L = K-P
+
+syms Q1 Q2 Q3 Q1(t) Q2(t) Q3(t) ddq1 ddq2 ddq3
+
+diffq1dot = diff(L,dq1)
+diffq1dot = subs(diffq1dot, [q1 q2 q3 dq1 dq2 dq3], [Q1 Q2 Q3 diff(Q1(t),t) diff(Q2(t),t) diff(Q3(t),t)])
+diffq1dot = diff(diffq1dot, t)
+diffq1dot = subs(diffq1dot, [Q1 Q2 Q3 diff(Q1(t),t) diff(Q2(t),t) diff(Q3(t),t) diff(Q1(t),t,t) diff(Q2(t),t,t) diff(Q3(t),t,t)], [q1 q2 q3 dq1 dq2 dq3 ddq1 ddq2 ddq3])
+
+diffq1 = diff(L,q1)
+
+Tau1 = diffq1dot - diffq1
+
+diffq2dot = diff(L,dq2)
+diffq2dot = subs(diffq2dot, [q1 q2 q3 dq1 dq2 dq3], [Q1 Q2 Q3 diff(Q1(t),t) diff(Q2(t),t) diff(Q3(t),t)])
+diffq2dot = diff(diffq2dot, t)
+diffq2dot = subs(diffq2dot, [Q1 Q2 Q3 diff(Q1(t),t) diff(Q2(t),t) diff(Q3(t),t) diff(Q1(t),t,t) diff(Q2(t),t,t) diff(Q3(t),t,t)], [q1 q2 q3 dq1 dq2 dq3 ddq1 ddq2 ddq3])
+
+diffq2 = diff(L,q2)
+
+F2 = diffq2dot - diffq2
+
+diffq3dot = diff(L,dq3)
+diffq3dot = subs(diffq3dot, [q1 q2 q3 dq1 dq2 dq3], [Q1 Q2 Q3 diff(Q1(t),t) diff(Q2(t),t) diff(Q3(t),t)])
+diffq3dot = diff(diffq3dot, t)
+diffq3dot = subs(diffq3dot, [Q1 Q2 Q3 diff(Q1(t),t) diff(Q2(t),t) diff(Q3(t),t) diff(Q1(t),t,t) diff(Q2(t),t,t) diff(Q3(t),t,t)], [q1 q2 q3 dq1 dq2 dq3 ddq1 ddq2 ddq3])
+
+diffq3 = diff(L,q3)
+
+F3= diffq3dot - diffq3
+
+##### SOURCE END #####
+--></body></html>
