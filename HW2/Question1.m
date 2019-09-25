@@ -1,4 +1,4 @@
-%% Problem 2
+%% Problem 1
 
 %% Define Symbols
 syms m1 m2 q1 q2 q3 a b c g
